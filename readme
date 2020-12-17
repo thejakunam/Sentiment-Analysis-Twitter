@@ -1,0 +1,46 @@
+Instruction to run Question 1
+
+1. Kafka setup
+		Start zookeeper server 
+		$ bin/zookeeper-server-start.sh config/zookeeper.properties
+		
+		Start kafka server
+		$ bin/kafka-server-start.sh config/server.properties
+		
+		Create a topic 
+		$ bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+		
+		Create a producer 
+		$ bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+		
+		Create a consumer
+		$ bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+		
+							  
+2. Spark Setup
+
+	Navigate to the spark installation directory and Run your jar
+	
+	spark-submit  --class SentimentAnalysisTwitter <path_to_jar> <queryString> <topicName>
+
+3. Visualization Environment Setup
+
+		  Navigate to the elasticsearch directory and start by using
+		 			./elasticsearch
+							  
+		  Navigate to the kibana directory and start
+					./kibana
+					
+		  Navigate to the logstash directory
+		  
+				    Edit the logstash.conf file => set the topicName
+				    bin/logstash -f logstash.conf
+
+		  Open your browser and navigate to http://localhost:5601/app/timelion#
+				    give the filters
+						.es(q='message.keyword:NEGATIVE').label('Negative'),
+						.es(q='message.keyword:POSITIVE').label('Positive'),
+						.es(q='message.keyword:NEUTRAL').label('Neutral')
+
+
+
